@@ -10,7 +10,7 @@
 <?php
 
     $dir = opendir('DataSet');
-    $newFile = fopen("newFile.txt","w");
+    $newFile = fopen("newFile.txt","w"); // membuat file baru
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
 
         if ($file == '.' || $file == '..') {
@@ -23,7 +23,7 @@
          $document="";
          while(! feof($fn))  {
             $result = fgets($fn);
-            fwrite($newFile,$result);
+            fwrite($newFile,$result);// menulis text ke new file
          }
          $document=$document.$result;
          echo $document;
