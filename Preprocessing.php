@@ -42,7 +42,7 @@
             return preg_replace('/\b('.implode('|',$this->stop_words).')\b/','',$teks);
         }
 
-        private function stumming($teks){
+        private function stemming($teks){
             return \Nadar\Stemming\Stemm::stemPhrase($teks, 'en');
         }
 
@@ -50,7 +50,7 @@
             $result = $this->lowerCases($teks);
             $result = $this->removePunctuation($result);
             $result = $this->removeStopWords($result);
-            $result = $this->stumming($result);
+            $result = $this->stemming($result);
             return $result;
         }
     }
