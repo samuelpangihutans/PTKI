@@ -8,6 +8,8 @@
 </head>
 <body>
 <?php
+    include('Preprocessing.php');
+    $preprocessing =  new Preprocessing();
 
     $dir = opendir('DataSet');
    
@@ -16,17 +18,18 @@
         if ($file == '.' || $file == '..') {
             continue;
         }
-         $currentFile=$file;
-         //untuk membaca file 
-         $fn = fopen("DataSet/".$currentFile,"r");
-         //membuat File baru
-         $newFile = fopen("DataCleaning/".$currentFile,"w"); 
-         while(! feof($fn))  {
-            $result = fgets($fn);
-            fwrite($newFile,$result);// menulis text ke new file
-         }
-         echo "sukses";
-         fclose($fn);
+            $currentFile=$file;
+            //untuk membaca file 
+            $fn = fopen("DataSet/".$currentFile,"r");
+            //membuat File baru
+            $newFile = fopen("DataCleaning/".$currentFile,"w"); 
+            while(! feof($fn))  {
+                $teks = fgets($fn);
+                $result = $preprocessing->doPreprocessing($teks);
+                fwrite($newFile,$result);// menulis text ke new file
+            }
+        //  echo "sukses";
+        fclose($fn);
     }
     fclose($newFile);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
