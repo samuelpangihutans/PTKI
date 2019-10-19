@@ -25,8 +25,8 @@
             $result = fgets($fn);
             fwrite($newFile,$result);
          }
-         echo $result;
-
+         $document=$document.$result;
+         echo $document;
          fclose($fn);
         
     }
