@@ -10,25 +10,23 @@
 <?php
 
     $dir = opendir('DataSet');
-    $newFile = fopen("newFile.txt","w"); // membuat file baru
+   
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
 
         if ($file == '.' || $file == '..') {
             continue;
         }
-
          $currentFile=$file;
          //untuk membaca file 
          $fn = fopen("DataSet/".$currentFile,"r");
-         $document="";
+         //membuat File baru
+         $newFile = fopen("DataCleaning/".$currentFile,"w"); 
          while(! feof($fn))  {
             $result = fgets($fn);
             fwrite($newFile,$result);// menulis text ke new file
          }
-         $document=$document.$result;
-         echo $document;
+         echo "sukses";
          fclose($fn);
-        
     }
     fclose($newFile);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
