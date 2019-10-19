@@ -1,3 +1,6 @@
+<?php
+include 'preprocessing.php'
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +26,8 @@
          $newFile = fopen("DataCleaning/".$currentFile,"w"); 
          while(! feof($fn))  {
             $result = fgets($fn);
+            //preprocesing
+            $result=preproses($result);
             fwrite($newFile,$result);// menulis text ke new file
          }
          echo "sukses";
@@ -31,6 +36,8 @@
     fclose($newFile);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
 ?>
+
+
     
 </body>
 </html>
