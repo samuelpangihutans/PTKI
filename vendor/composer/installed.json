@@ -1,0 +1,48 @@
+[
+    {
+        "name": "nadar/stemming",
+        "version": "1.0.2",
+        "version_normalized": "1.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nadar/stemming.git",
+            "reference": "5b774d9486fe53d40aabf80c6925c926b40cf323"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nadar/stemming/zipball/5b774d9486fe53d40aabf80c6925c926b40cf323",
+            "reference": "5b774d9486fe53d40aabf80c6925c926b40cf323",
+            "shasum": ""
+        },
+        "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.0",
+            "phpunit/phpunit": "^6.0"
+        },
+        "time": "2017-03-26T14:30:22+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Nadar\\Stemming\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Basil Suter",
+                "homepage": "https://github.com/nadar",
+                "role": "Creator"
+            }
+        ],
+        "description": "Stemming by Language",
+        "homepage": "https://github.com/nadar/stemming",
+        "keywords": [
+            "php",
+            "stemmer",
+            "stemming"
+        ]
+    }
+]
