@@ -10,6 +10,7 @@
 <?php
 
     $dir = opendir('DataSet');
+    $newFile = fopen("newFile.txt","w");
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
 
         if ($file == '.' || $file == '..') {
@@ -22,12 +23,14 @@
          $document="";
          while(! feof($fn))  {
             $result = fgets($fn);
+            fwrite($newFile,$result);
          }
          echo $result;
 
          fclose($fn);
         
     }
+    fclose($newFile);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
 ?>
     
