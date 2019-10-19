@@ -23,8 +23,8 @@
          while(! feof($fn))  {
             $result = fgets($fn);
          }
-         echo $result;
-
+         $document=$document.$result;
+         echo $document;
          fclose($fn);
         
     }
