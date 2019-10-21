@@ -43,6 +43,8 @@
             $teks = str_replace(";", " ", $teks);
             $teks = str_replace("!", " ", $teks);
             $teks = str_replace("?", " ", $teks);
+            $teks = preg_replace('/\s+/', ' ', $teks);
+            $teks = str_replace("\n","",$teks);
             return $teks;
         }
 
@@ -67,9 +69,10 @@
         public function doPreprocessing($teks){
             $result = $this->lowerCases($teks);
             $result = $this->lemmatization($result);
-            $result = $this->removePunctuation($result);
             $result = $this->removeStopWords($result);
+            $result = $this->removePunctuation($result);
             $result = $this->stemming($result);
+            $result = ltrim($result);
             return $result;
         }
     }
