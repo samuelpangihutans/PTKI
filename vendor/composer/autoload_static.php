@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit2c009cb097bca53782b1b9dc26b19cf7
 {
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Skyeng\\' => 7,
+        ),
         'N' => 
         array (
             'Nadar\\Stemming\\' => 15,
@@ -14,6 +18,10 @@ class ComposerStaticInit2c009cb097bca53782b1b9dc26b19cf7
     );
 
     public static $prefixDirsPsr4 = array (
+        'Skyeng\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/skyeng/php-lemmatizer/src',
+        ),
         'Nadar\\Stemming\\' => 
         array (
             0 => __DIR__ . '/..' . '/nadar/stemming/src',
