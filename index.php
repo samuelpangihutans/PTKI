@@ -11,10 +11,14 @@
     include('Preprocessing.php');
     $preprocessing =  new Preprocessing();
 
+    include("Statistik.php");
+    $statistik = new Statistik();
+
     $dir = opendir('DataSet');
    
+    $idx=0;
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
-
+        $temp=0;
         if ($file == '.' || $file == '..') {
             continue;
         }
@@ -26,12 +30,16 @@
             while(! feof($fn))  {
                 $teks = fgets($fn);
                 $result = $preprocessing->doPreprocessing($teks);
+                $temp += $statistik->jumlahTerm($result);
                 fwrite($newFile,$result);// menulis text ke new file
             }
-         echo "sukses cleaning ".$currentFile."<br>";
+        // echo "sukses cleaning ".$currentFile."<br>";
+        $statistik->setValueArrayTerm($temp,$idx);
+        $idx++;
         fclose($fn);
     }
     fclose($newFile);
+    echo $statistik->getValueArrayTerm(0);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
 ?>
     
