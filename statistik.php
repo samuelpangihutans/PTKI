@@ -53,7 +53,7 @@ class Statistik{
     }
 
     public function jumlahRataRataWordDoc(){
-        
+        //todoodododo
     }
 
     public function jumlahRataRataTermDoc(){
