@@ -31,18 +31,20 @@ class Statistik{
     }
 
     public function jumlahRataRataWordDoc(){
-        
+        $temp = 0;
+        for($i = 0; $i<$this->getJumlahDokumen();$i++){
+            $temp+=0;
+        }
+        return $temp/$this->getJumlahDokumen();
     }
 
     public function jumlahRataRataTermDoc(){
-      
+        $temp = 0;
+        for($i = 0; $i<$this->getJumlahDokumen();$i++){
+            $temp+=$this->arrayTerm[$i];
+        }
+        return $temp/$this->getJumlahDokumen();
     }
 
 }
-
-
-
-
-
-
 ?>
