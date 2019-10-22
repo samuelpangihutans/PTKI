@@ -28,7 +28,7 @@
                 $result = $preprocessing->doPreprocessing($teks);
                 fwrite($newFile,$result);// menulis text ke new file
             }
-        //  echo "sukses";
+         echo "sukses cleaning ".$currentFile."<br>";
         fclose($fn);
     }
     fclose($newFile);
