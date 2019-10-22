@@ -1,5 +1,6 @@
 {
     "require": {
-        "nadar/stemming": "^1.0"
+        "nadar/stemming": "^1.0",
+        "skyeng/php-lemmatizer": "^1.0"
     }
 }

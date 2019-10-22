@@ -1,9 +1,15 @@
 <?php
     include 'vendor/autoload.php';
+    
+    use Skyeng\Lemmatizer;
+
+    // Require Composer's autoloader
+    require_once __DIR__ . "/vendor/autoload.php";
 
     class Preprocessing{
         private $stop_words;
         private $stemming_list;
+        private $lemmatizer;
         public function __construct(){ 
             $this->stop_words=array
             ("i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", 
@@ -15,6 +21,8 @@
             "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how",  "all", "any", "both", 
             "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same",  "so", "than", "too", 
             "very", "s", "t", "can", "will", "just", "don", "should", "now");
+        
+            $this->lemmatizer = new Lemmatizer();
         }
         
         private function lowerCases($teks){
@@ -35,6 +43,8 @@
             $teks = str_replace(";", " ", $teks);
             $teks = str_replace("!", " ", $teks);
             $teks = str_replace("?", " ", $teks);
+            $teks = preg_replace('/\s+/', ' ', $teks);
+            $teks = str_replace("\n","",$teks);
             return $teks;
         }
 
@@ -46,11 +56,23 @@
             return \Nadar\Stemming\Stemm::stemPhrase($teks, 'en');
         }
 
+        private function lemmatization($teks){
+            $str = explode(" ",$teks);
+            $result = "";
+            foreach($str as $s){
+                $lemmas = $this->lemmatizer->getLemmas($s);
+                $result .= $lemmas[0]->getLemma()." ";
+            }
+            return $result;
+        }
+
         public function doPreprocessing($teks){
             $result = $this->lowerCases($teks);
-            $result = $this->removePunctuation($result);
+            $result = $this->lemmatization($result);
             $result = $this->removeStopWords($result);
-            $result = $this->stemming($result);
+            $result = $this->removePunctuation($result);
+           $result = $this->stemming($result);
+            $result = ltrim($result);
             return $result;
         }
     }

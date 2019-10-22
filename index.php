@@ -9,7 +9,9 @@
 <body>
 <?php
     include('Preprocessing.php');
+    include('Statistik.php');
     $preprocessing =  new Preprocessing();
+    $statistik = new Statistik();
 
     $dir = opendir('DataSet');
    
@@ -18,6 +20,7 @@
         if ($file == '.' || $file == '..') {
             continue;
         }
+            $statistik->jumlahDoc();
             $currentFile=$file;
             //untuk membaca file 
             $fn = fopen("DataSet/".$currentFile,"r");
@@ -28,9 +31,10 @@
                 $result = $preprocessing->doPreprocessing($teks);
                 fwrite($newFile,$result);// menulis text ke new file
             }
-        //  echo "sukses";
+         #echo "sukses cleaning ".$currentFile."<br>";
         fclose($fn);
     }
+    echo "Jumlah Dokumen = ".$statistik->getJumlahDokumen();
     fclose($newFile);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
 ?>
