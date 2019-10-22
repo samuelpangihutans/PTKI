@@ -34,14 +34,13 @@
                 $temp += $statistik->jumlahTerm($result);
                 fwrite($newFile,$result);// menulis text ke new file
             }
-        // echo "sukses cleaning ".$currentFile."<br>";
+        echo "sukses cleaning ".$currentFile."<br>";
         $statistik->setValueArrayTerm($temp,$idx);
         $idx++;
         fclose($fn);
     }
     
     fclose($newFile);
-    echo $statistik->getValueArrayTerm(0);
     closedir($dir);  //SELESAI MEMBACA SEMUA DIRECTORY
 
     $jumlahKata=$statistik->jumlahWord ();
@@ -50,8 +49,18 @@
     echo "<br>";
     
     echo "Jumlah Dokumen :".$statistik->getJumlahDoc();
+    
+    echo "<br>";
     echo "<br>";
     echo "Jumlah word Seluruh Document : ".$jumlahKata;
+    echo "<br>";
+    echo "Rata-rata word tiap dokumen : ".$statistik->jumlahRataRataWordDoc($jumlahKata);
+    
+    echo "<br>";
+    echo "<br>";
+    echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
+    echo "<br>";
+    echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
 ?>
     
 </body>
