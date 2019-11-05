@@ -1,3 +1,6 @@
+<?php
+include 'preprocessing.php'
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +72,8 @@
   $invertedIdx->getInvertedIndex();
    
 ?>
+
+
     
 </body>
 </html>
