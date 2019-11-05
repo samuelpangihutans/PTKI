@@ -17,6 +17,9 @@
     include('InvertedIdx.php');
     $invertedIdx=new InvertedIdx();
 
+    include('Search.php');
+    $search=new Search();
+
     $dir = opendir('DataSet');
     
     $idx=0;
@@ -65,9 +68,8 @@
     // echo "<br>";
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
 
-  $invertedIdx->create();
-  $invertedIdx->getInvertedIndex();
-   
+    $invertedIdx->create();
+    $search->search("i love fairest creature",$invertedIdx->getInvertedIndex());
 ?>
     
 </body>

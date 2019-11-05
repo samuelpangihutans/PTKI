@@ -43,7 +43,7 @@ class InvertedIdx{
     }
 
     public function getInvertedIndex(){
-        print_r($this->inverted_idx);
+        return $this->inverted_idx;
     }
 
 
