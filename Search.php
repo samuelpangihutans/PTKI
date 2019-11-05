@@ -9,14 +9,15 @@ class Search{
     public function search($input,$invertedIndex){
         $query=$this->clean->doPreprocessing($input);
         $res=array();
-        $words=explode(" ",$query);
+        $words=explode(" ",rtrim($query));
         for($i=0;$i<sizeof($words);$i++){
             if(array_key_exists($words[$i],$invertedIndex)==TRUE){
                 for($j=0;$j<sizeof((array)$invertedIndex[$words[$i]]);$j++){
-                    if(array_key_exists($words[$i],$invertedIndex)){
+                    // if(array_key_exists($words[$i],$invertedIndex)){
                         echo $words[$i]." ".$invertedIndex[$words[$i]][$j]." ";
-                    }
+                    // }
                 }
+                echo "<br>";
             }
         }
     }
