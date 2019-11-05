@@ -16,8 +16,11 @@
     include("Statistik.php");
     $statistik = new Statistik();
 
+    include('InvertedIdx.php');
+    $invertedIdx=new InvertedIdx();
+
     $dir = opendir('DataSet');
-   
+    
     $idx=0;
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
         $temp=0;
@@ -36,7 +39,13 @@
                 $temp += $statistik->jumlahTerm($result);
                 fwrite($newFile,$result);// menulis text ke new file
             }
+<<<<<<< HEAD
          #echo "sukses cleaning ".$currentFile."<br>";
+=======
+        //echo "sukses cleaning ".$currentFile."<br>";
+        $statistik->setValueArrayTerm($temp,$idx);
+        $idx++;
+>>>>>>> 3b2bba54f5459a21e59c798118c7da7c4414307c
         fclose($fn);
     }
     echo "Jumlah Dokumen = ".$statistik->getJumlahDokumen();
@@ -45,22 +54,26 @@
 
     $jumlahKata=$statistik->jumlahWord ();
 
-    echo "<br>";
-    echo "<br>";
+    // echo "<br>";
+    // echo "<br>";
     
-    echo "Jumlah Dokumen :".$statistik->getJumlahDoc();
+    // echo "Jumlah Dokumen :".$statistik->getJumlahDoc();
     
-    echo "<br>";
-    echo "<br>";
-    echo "Jumlah word Seluruh Document : ".$jumlahKata;
-    echo "<br>";
-    echo "Rata-rata word tiap dokumen : ".$statistik->jumlahRataRataWordDoc($jumlahKata);
+    // echo "<br>";
+    // echo "<br>";
+    // echo "Jumlah word Seluruh Document : ".$jumlahKata;
+    // echo "<br>";
+    // echo "Rata-rata word tiap dokumen : ".$statistik->jumlahRataRataWordDoc($jumlahKata);
     
-    echo "<br>";
-    echo "<br>";
-    echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
-    echo "<br>";
-    echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
+    // echo "<br>";
+    // echo "<br>";
+    // echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
+    // echo "<br>";
+    // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
+
+  $invertedIdx->create();
+  $invertedIdx->getInvertedIndex();
+   
 ?>
     
 </body>
