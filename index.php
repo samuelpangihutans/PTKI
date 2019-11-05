@@ -17,6 +17,9 @@
     include('InvertedIdx.php');
     $invertedIdx=new InvertedIdx();
 
+    include("Search.php");
+    
+
     $dir = opendir('DataSet');
     
     $idx=0;
@@ -65,9 +68,48 @@
     // echo "<br>";
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
 
-  $invertedIdx->create();
-  $invertedIdx->getInvertedIndex();
-   
+    $invertedIdx->createInvertedIdx();
+    #$invertedIdx->getInvertedIndex();
+    // $inverted = $invertedIdx->getInvertedIndex();
+
+    // // print_r(array_keys($inverted));
+
+    // $search = new Search("fairest people die first", $inverted, $preprocessing);
+    // // $search->preprocQuery();
+    // $temp = $search->searchDoc();
+    // $keys = array_keys($temp);
+    // // print_r($temp);
+    // // print_r("Key ".$keys[0]." values ".$temp[$keys[0]]);
+    // echo "<br>";
+    // // print_r(sizeof($temp));
+
+    // $t = $inverted[$keys[0]];
+    // print_r(sizeof($t));
+    // echo "<br>";
+    // print_r(sizeof($t));
+    // // cara barbar
+    // if(sizeof($temp)==1){
+    //     print_r($temp);
+    // }else if(sizeof($temp)>1){
+    //     $keys = array_keys($temp);
+    //     if(sizeof($temp)==2){
+    //         print_r(array_intersect_assoc($temp[$keys[0]],$temp[$keys[1]]));
+    //     }else{
+    //         for($i = 0;$i<sizeof($temp)-1;$i++){
+    //             if($i==0){
+    //                 $arr1 = $temp[$keys[$i]];
+    //                 $arr2 = $temp[$keys[$i+1]];
+    //                 $te = array_intersect_assoc($arr1,$arr2);
+    //             }else{
+    //                 $arr1 = $te;
+    //                 $arr2 = $temp[$keys[$i+1]];
+    //                 $te = array_intersect_assoc($arr1,$arr2);
+    //             }   
+    //         }
+    //         return $te;
+    //     }
+    // }
+    // print_r($inverted[""]);
 ?>
     
 </body>
