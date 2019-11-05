@@ -14,8 +14,11 @@
     include("Statistik.php");
     $statistik = new Statistik();
 
+    include('invertedIdx.php');
+    $invertedIdx=new InvertedIdx();
+
     $dir = opendir('DataSet');
-   
+    
     $idx=0;
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
         $temp=0;
@@ -61,6 +64,10 @@
     echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
     echo "<br>";
     echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
+
+    $invertedIdx.create();
+   $results= $invertedIdx.getInvertedIndex();
+    print_r($results);
 ?>
     
 </body>
