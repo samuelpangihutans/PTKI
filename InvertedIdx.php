@@ -54,6 +54,7 @@
                 echo "<br>";
             }
             echo "<br>";
+            return $this->invertedIdx;
             // print_r("Keys ".$keys[0]." value ".$this->invertedIdx[$keys[0]]);
         }
     }
