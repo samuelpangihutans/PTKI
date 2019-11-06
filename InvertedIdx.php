@@ -46,16 +46,6 @@
             closedir($dir);
             $keys = array_keys($this->invertedIdx);
             // print_r(array_keys($this->invertedIdx));
-<<<<<<< HEAD
-            for ($i = 0;$i<sizeof($keys);$i++){
-                print_r("Keys = ".$keys[$i]." Values =");
-                for($j = 0;$j<sizeof($this->invertedIdx[$keys[$i]]);$j++){
-                    print_r($this->invertedIdx[$keys[$i]][$j]." ");
-                }
-                echo "<br>";
-            }
-            echo "<br>";
-=======
             // for ($i = 0;$i<sizeof($keys);$i++){
             //     print_r("Keys = ".$keys[$i]." Values =");
             //     for($j = 0;$j<sizeof($this->invertedIdx[$keys[$i]]);$j++){
@@ -64,7 +54,6 @@
             //     echo "<br>";
             // }
             // echo "<br>";
->>>>>>> a91815a26d4d855708cb6731038a813d5562631b
             return $this->invertedIdx;
             // print_r("Keys ".$keys[0]." value ".$this->invertedIdx[$keys[0]]);
         }
