@@ -23,6 +23,7 @@
     $dir = opendir('DataSet');
     
     $idx=0;
+    $times = 0;
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
         $temp=0;
         if ($file == '.' || $file == '..') {
@@ -37,6 +38,7 @@
             while(! feof($fn))  {
                 $teks = fgets($fn);
                 $result = $preprocessing->doPreprocessing($teks);
+                $times += $preprocessing->getTime();
                 $temp += $statistik->jumlahTerm($result);
                 fwrite($newFile,$result);// menulis text ke new file
             }
@@ -67,8 +69,18 @@
     // echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
     // echo "<br>";
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
+    print_r("Exceution time Preprocessing = ".$times);
+    echo "<br>";
 
+    $start = microtime(true);
     $invertedIdx->createInvertedIdx();
+    $time_elapsed_secs = microtime(true) - $start;
+
+    print_r("Exceution time Inverted Index = ".$time_elapsed_secs);
+
+    echo "<br>";
+
+
     $idx = $invertedIdx->getInvertedIdx();
     $invertedIdx->saveInvertedIdx();
     $search->search("fairest people die first",$invertedIdx->getInvertedIdx());

@@ -11,6 +11,9 @@
         private $stop_words;
         // atribut untuk kelas lemmatizer
         private $lemmatizer;
+
+        private $start, $times;
+
         public function __construct(){ 
             // inisiaisasi array stop word
             $this->stop_words=array
@@ -26,6 +29,9 @@
             
             // inisialisasi utnuk kelas lemmatizer
             $this->lemmatizer = new Lemmatizer();
+
+            $this->start = 0;
+            $this->times = 0;
         }
         
         private function lowerCases($teks){
@@ -73,13 +79,19 @@
 
         // return hasil dari preprocessing
         public function doPreprocessing($teks){
+            $this->start = microtime(true);
             $result = $this->lowerCases($teks);
             $result = $this->lemmatization($result);
             $result = $this->removeStopWords($result);
             $result = $this->removePunctuation($result);
             $result = $this->stemming($result);
+            $this->times = microtime(true)-$this->start;
             // $result = ltrim($result);
             return $result;
+        }
+
+        public function getTime(){
+            return $this->times;
         }
     }
 ?>
