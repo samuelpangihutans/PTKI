@@ -13,6 +13,8 @@ class Search{
         $res=[];
         // split query, dengan menghilangkan white space
         $words=explode(" ",rtrim($query));
+        // sorting word alfabet
+        sort($words);
         // looping sebanyak jumlah term hasil prepocessing
         for($i=0;$i<sizeof($words);$i++){
             // cek apakah word ke i ada di dalam inverted index
@@ -31,6 +33,4 @@ class Search{
         print_r($res);
     }
 }
-
-
 ?>

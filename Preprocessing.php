@@ -78,7 +78,7 @@
             $result = $this->removeStopWords($result);
             $result = $this->removePunctuation($result);
             $result = $this->stemming($result);
-            $result = ltrim($result);
+            // $result = ltrim($result);
             return $result;
         }
     }

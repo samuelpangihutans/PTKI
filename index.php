@@ -68,8 +68,11 @@
     // echo "<br>";
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
 
+    $invertedIdx->createInvertedIdx();
+    $idx = $invertedIdx->getInvertedIdx();
+    $search->search("fairest people die first",$invertedIdx->getInvertedIdx());
     
-    $search->search("fairest people die first",$invertedIdx->createInvertedIdx());
+    
     #$invertedIdx->getInvertedIndex();
     // $inverted = $invertedIdx->getInvertedIndex();
 

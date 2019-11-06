@@ -2,9 +2,11 @@
     class InvertedIdx{
         // array untuk menampung inverted index
         private $invertedIdx;
+        // private $abcd;
 
         public function __construct(){
             $this->invertedIdx = array();
+            // $this->term="";
         }
 
         public function createInvertedIdx(){
@@ -23,32 +25,38 @@
                         $teks = fgets($fn);
                         $split=explode(" ",$teks);
                         for($i = 0; $i<sizeof($split); $i++){
-                            // key yang ada di array saat ini
-                            $keys = array_keys($this->invertedIdx);
-                            // kalau key belum ada di array
-                            if(array_key_exists($split[$i],$this->invertedIdx)==FALSE){
-                                // inisialisasi key pada array 
-                                // memberikan value pada key
-                                $this->invertedIdx[$split[$i]] = array($idx);
-                            }
-                            // kalau key sudah ada di array dibeda dokumen
-                            else if(array_key_exists($split[$i],$this->invertedIdx)==TRUE){
-                                $temp = $this->invertedIdx[$split[$i]];
-                                // menghindari duplikasi no dokumen yang sama
-                                // cek di index sebelumnya
-                                if($temp[sizeof($temp)-1]!=$idx){
-                                    // isi di index selanjutnya dengan no dokumen berbeda
-                                    $temp[sizeof($temp)] = $idx;
-                                    $this->invertedIdx[$split[$i]] = $temp;
+                            // jika buka string kosong
+                            if($split[$i] != ""){
+                                // penampung
+                                // $this->term.=$split[$i]." ";
+                                // kalau term belum ada di array
+                                if(array_key_exists($split[$i],$this->invertedIdx)==FALSE){
+                                    // inisialisasi key pada array 
+                                    // memberikan value pada key
+                                    $this->invertedIdx[$split[$i]] = array($idx);
+                                }
+                                // kalau term sudah ada di array dibeda dokumen
+                                else if(array_key_exists($split[$i],$this->invertedIdx)==TRUE){
+                                    $temp = $this->invertedIdx[$split[$i]];
+                                    // menghindari duplikasi no dokumen yang sama
+                                    // cek di index sebelumnya
+                                    if($temp[sizeof($temp)-1]!=$idx){
+                                        // isi di index selanjutnya dengan no dokumen berbeda
+                                        $temp[sizeof($temp)] = $idx;
+                                        $this->invertedIdx[$split[$i]] = $temp;
+                                    }
                                 }
                             }
                         }
-                        
                     }
                 $idx++;
                 fclose($fn);
             }
             closedir($dir);
+            ksort($this->invertedIdx);
+        }
+
+        public function getInvertedIdx(){
             return $this->invertedIdx;
         }
 
@@ -64,6 +72,28 @@
                 }
                 echo "<br>";
             }
+        }
+
+        public function saveInvertedIdx(){
+            $dir = "InvertedIdx";
+            // cek nama direktori
+            if( is_dir($dir) === false ){
+                mkdir($dir);
+            }
+            
+            // buat file untuk invertedIdx.txt
+            $newFile = fopen("InvertedIdx/invertedIdx.txt","w") or die("can't open file");
+
+            // menulis inverted index kedalam file txt
+            
+            // foreach ($this->invertedIdx as $key => $value) {
+            //     fwrite($newFile, $key.'=>'.$value);
+            //     $stringbreak = "\n";
+            //     fwrite($newFile, $stringbreak);
+            // }
+
+            // close
+            fclose($newFile);
         }
     }
 ?>
