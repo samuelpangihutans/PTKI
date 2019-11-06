@@ -14,19 +14,34 @@
 
 
 <!--view  GAIS -->
-<form action="view.php" method="post">
-<div class="card mt-2 mr-3" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Data Preprocessing</h5>
-    <p class="card-text">Fungsi ini berguna untuk membersihkan data, yakni normalisasi, case folding, stop words, lemmatization, Stemming</p>
-    <button type="submit" class="btn btn-primary" name="preprocess">Do Preprocessing</button>
+<form action="" method="post">
+  <div class="card mt-2 mr-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Data Preprocessing</h5>
+      <p class="card-text">Fungsi ini berguna untuk membersihkan data, yakni normalisasi, case folding, stop words, lemmatization, Stemming</p>
+      <button type="submit" class="btn btn-primary" name="preprocess">Do Preprocessing</button>
+    </div>
   </div>
-</div>
+
+  <div class="card mt-2 mr-3" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Inverted Index</h5>
+      <p class="card-text">Untuk membuat inverted index, lakukan setelah prepocessing</p>
+      <button type="submit" class="btn btn-primary" name="inverted_index">Inverted Index</button>
+    </div>
+  </div>
 </form>
 
 <?php
 
+$jumlahKata=null;
+$jumlahDoc=null;
+$jumlahRataRataTermDoc=null;
+$jumlahRataRataWordDoc=null;
+$jumlahTerm=null;
+$ETP=null;
 
+$time=null;
 if(isset($_POST['preprocess'])){
     include("Statistik.php");
     $statistik = new Statistik();
@@ -36,6 +51,8 @@ if(isset($_POST['preprocess'])){
 
     $dir = opendir('DataSet');
     $idx=0;
+    // execution times prepocessing
+    $ETP = 0;
     while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
         $jTerm=0;
         if ($file == '.' || $file == '..') {
@@ -51,6 +68,7 @@ if(isset($_POST['preprocess'])){
                 $teks = fgets($fn);
                 $result = $preprocessing->doPreprocessing($teks);
                 $jTerm += $statistik->jumlahTerm($result);
+                $ETP += $preprocessing->getTime();
                 fwrite($newFile,$result);// menulis text ke new file
             }
         $statistik->setValueArrayTerm($jTerm,$idx);
@@ -63,77 +81,70 @@ if(isset($_POST['preprocess'])){
 
     $jumlahKata=$statistik->jumlahWord ();
     $jumlahDoc=$statistik->getJumlahDoc();
-    $jumlahTerm=$jTerm;
+    $jumlahTerm=$statistik->getValueArrayTerm();
     $jumlahRataRataWordDoc=$statistik->jumlahRataRataWordDoc($jumlahKata);
     $jumlahRataRataTermDoc=$statistik->jumlahRataRataTermDoc();
 
- echo'<table class="table mt-3 mr-3">
-  <thead>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Jumlah Word</td>
-      <td>'. $jumlahKata.'</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jumlah Dokumen</td>
-      <td> '.$jumlahDoc.'</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Jumlah Term</td>
-      <td>'. $jumlahTerm.'</td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Jumlah rata-rata word dokumen</td>
-      <td>'. $jumlahRataRataWordDoc.'</td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Jumlah rata-rata term dokumen</td>
-      <td>'. $jumlahRataRataTermDoc.'</td>
-    </tr>
+    echo'
+  <table class="table mt-3 mr-3">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Jumlah Word</td>
+        <td>'. $jumlahKata.'</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jumlah Dokumen</td>
+        <td> '.$jumlahDoc.'</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Jumlah Term</td>
+        <td>'. $jumlahTerm.'</td>
+      </tr>
+      <tr>
+        <th scope="row">4</th>
+        <td>Jumlah rata-rata word dokumen</td>
+        <td>'. $jumlahRataRataWordDoc.'</td>
+      </tr>
+      <tr>
+        <th scope="row">5</th>
+        <td>Jumlah rata-rata term dokumen</td>
+        <td>'. $jumlahRataRataTermDoc.'</td>
+      </tr>
+      <tr>
+        <th scope="row">6</th>
+        <td>Execution Time Prepocessing</td>
+        <td>'. $ETP.'</td>
+      </tr>
   </tbody>
 </table>';
-    
+}else if(isset($_POST['inverted_index'])){
+  include('InvertedIdx.php');
+  $invertedIdx=new InvertedIdx();
 
+  $start = microtime(true);
+  $invertedIdx->createInvertedIdx();
+  $time = microtime(true) - $start;
+
+  echo'
+  <table class="table mt-3 mr-3">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Execution Time Inverted Index</td>
+        <td>'. $time.'</td>
+      </tr>
+    </tbody>
+  </table>';
+  $idx = $invertedIdx->getInvertedIdx();
+  $invertedIdx->saveInvertedIdx();
 }
-?>
-
-<!-- <table class="table">
-  <thead>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Jumlah Word</td>
-      <td><?php $jumlahKata?></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jumlah Dokumen</td>
-      <td><?php $jumlahDoc?></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Jumlah Term</td>
-      <td><?php $jumlahTerm?></td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Jumlah rata-rata word dokumen</td>
-      <td><?php $jumlahRataRataWordDoc?></td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>Jumlah rata-rata term dokumen</td>
-      <td><?php $jumlahRataRataTermDoc?></td>
-    </tr>
-  </tbody>
-</table> -->
-    
+?>    
 </body>
 </html>
