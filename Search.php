@@ -23,7 +23,8 @@ class Search{
                     if(array_key_exists($idDoc,$res)==FALSE){
                         $res[$idDoc]=1;
                     }else {
-                        $res[$idDoc]+=1;                        }
+                        $res[$idDoc]+=1;                        
+                    }
                 }
             }
         }
