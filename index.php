@@ -18,7 +18,7 @@
     $invertedIdx=new InvertedIdx();
 
     include("Search.php");
-    
+    $search=new Search();
 
     $dir = opendir('DataSet');
     
@@ -68,7 +68,8 @@
     // echo "<br>";
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
 
-    $invertedIdx->createInvertedIdx();
+    
+    $search->search("fairest people die first",$invertedIdx->createInvertedIdx());
     #$invertedIdx->getInvertedIndex();
     // $inverted = $invertedIdx->getInvertedIndex();
 

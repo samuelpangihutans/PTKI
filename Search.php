@@ -1,45 +1,33 @@
 <?php
-    // include("Preprocessing.php");
-    class Search{
-        private $query;
-        private $invertedIdx;
-        private $preprocessing;
+class Search{
+    private $clean;
 
-        public function __construct($query, $invertedIdx, $preprocessing){
-            $this->query = $query;
-            $this->invertedIdx = $invertedIdx;
-            $this->preprocessing = $preprocessing;
-            
-        }
-
-        public function preprocQuery(){
-            // print($this->preprocessing->doPreprocessing($this->query));
-            return $this->preprocessing->doPreprocessing($this->query);
-        }
-
-        public function searchDoc(){
-            // print($this->preprocQuery());
-            // echo "<br>";
-            $split = explode(" ",rtrim($this->preprocQuery()));
-            print_r($split);
-            echo "<br>";
-            $arr = array();
-            for($i = 0; $i<sizeof($split);$i++){
-                // print($split[$i]." i = ".$i);
-                
-                if(array_key_exists($split[$i],$this->invertedIdx)==TRUE){
-                    print_r($split[$i]." ada didalam inverted index ". $i);
-                    echo "<br>";
-                    $arr[$split[$i]] = $this->invertedIdx[$split[$i]];
-                    // print("Key pada Array = ");
-                    // print_r($arr[$split[$i]]);
-                    // print($i);
-                    echo "<br>";
-                }
-            }
-            return $arr;
-
-            // print_r($this->invertedIdx["fair"]);
-        }
+    public function __construct(){
+        $this->clean=new Preprocessing();
     }
+
+    public function search($input,$invertedIndex){
+        $query=$this->clean->doPreprocessing($input);
+        $res=[];
+        $words=explode(" ",rtrim($query));
+        for($i=0;$i<sizeof($words);$i++){
+            if(array_key_exists($words[$i],$invertedIndex)==TRUE){
+                for($j=0;$j<sizeof((array)$invertedIndex[$words[$i]]);$j++){
+                        $idDoc = $invertedIndex[$words[$i]][$j];
+                        if(array_key_exists($idDoc,$res)==FALSE){
+                            $res[$idDoc]=1;
+                        }else {
+                            $res[$idDoc]+=1;
+                        }
+                        //checking words
+                        //echo $words[$i]." ".$invertedIndex[$words[$i]][$j]." ";
+                }
+                echo "<br>";
+            }
+        }
+        print_r($res);
+    }
+}
+
+
 ?>
