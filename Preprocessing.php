@@ -7,10 +7,12 @@
     require_once __DIR__ . "/vendor/autoload.php";
 
     class Preprocessing{
+        // atribut untuk menampung stop word
         private $stop_words;
-        private $stemming_list;
+        // atribut untuk kelas lemmatizer
         private $lemmatizer;
         public function __construct(){ 
+            // inisiaisasi array stop word
             $this->stop_words=array
             ("i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", 
             "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself",  "they", "them", "their", 
@@ -21,7 +23,8 @@
             "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how",  "all", "any", "both", 
             "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same",  "so", "than", "too", 
             "very", "s", "t", "can", "will", "just", "don", "should", "now");
-        
+            
+            // inisialisasi utnuk kelas lemmatizer
             $this->lemmatizer = new Lemmatizer();
         }
         
@@ -52,10 +55,12 @@
             return preg_replace('/\b('.implode('|',$this->stop_words).')\b/','',$teks);
         }
 
+        // return hasil stemming dalam bahasa inggris
         private function stemming($teks){
             return \Nadar\Stemming\Stemm::stemPhrase($teks, 'en');
         }
 
+        // return hasil hasil lematization
         private function lemmatization($teks){
             $str = explode(" ",$teks);
             $result = "";
@@ -66,6 +71,7 @@
             return $result;
         }
 
+        // return hasil dari preprocessing
         public function doPreprocessing($teks){
             $result = $this->lowerCases($teks);
             $result = $this->lemmatization($result);

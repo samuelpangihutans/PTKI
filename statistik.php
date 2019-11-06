@@ -1,9 +1,11 @@
 <?php
 
 class Statistik{
-    //Atribut isi disini PO !!
+    // atribut untuk jumlah kata dalam doc
     private $jmlhKataDoc;
+    // atribut untuk jumlah doc
     private $jumlahDoc;
+    // atribut untuk menampung term
     private $arrayTerm;
 
     public function __construct(){ 
@@ -55,10 +57,13 @@ class Statistik{
         return sizeof($temp);
     }
 
+    // idx untuk nomor dokumen
+    // res jumlah term pada dokumen idx 
     public function setValueArrayTerm($res, $idx){
         $this->arrayTerm[$idx]=$res;
     }
 
+    // mengembalikan jumlah term pada semua dokumen
     public function getValueArrayTerm(){
         $res=0;
         for ($i = 0 ; $i<$this->getJumlahDoc();$i++){

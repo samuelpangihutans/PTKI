@@ -1,5 +1,6 @@
 <?php
     class InvertedIdx{
+        // array untuk menampung inverted index
         private $invertedIdx;
 
         public function __construct(){
@@ -25,14 +26,18 @@
                             // key yang ada di array saat ini
                             $keys = array_keys($this->invertedIdx);
                             // kalau key belum ada di array
-                            if(array_key_exists($split[$i],$this->invertedIdx)==FALSE){//return false
+                            if(array_key_exists($split[$i],$this->invertedIdx)==FALSE){
+                                // inisialisasi key pada array 
+                                // memberikan value pada key
                                 $this->invertedIdx[$split[$i]] = array($idx);
-                                #var_dump(array_key_exists($split[$i], $this->invertedIdx));
                             }
                             // kalau key sudah ada di array dibeda dokumen
                             else if(array_key_exists($split[$i],$this->invertedIdx)==TRUE){
                                 $temp = $this->invertedIdx[$split[$i]];
+                                // menghindari duplikasi no dokumen yang sama
+                                // cek di index sebelumnya
                                 if($temp[sizeof($temp)-1]!=$idx){
+                                    // isi di index selanjutnya dengan no dokumen berbeda
                                     $temp[sizeof($temp)] = $idx;
                                     $this->invertedIdx[$split[$i]] = $temp;
                                 }
@@ -44,18 +49,21 @@
                 fclose($fn);
             }
             closedir($dir);
-            $keys = array_keys($this->invertedIdx);
-            // print_r(array_keys($this->invertedIdx));
-            // for ($i = 0;$i<sizeof($keys);$i++){
-            //     print_r("Keys = ".$keys[$i]." Values =");
-            //     for($j = 0;$j<sizeof($this->invertedIdx[$keys[$i]]);$j++){
-            //         print_r($this->invertedIdx[$keys[$i]][$j]." ");
-            //     }
-            //     echo "<br>";
-            // }
-            // echo "<br>";
             return $this->invertedIdx;
-            // print_r("Keys ".$keys[0]." value ".$this->invertedIdx[$keys[0]]);
+        }
+
+        public function print(){
+            // keys berupa term haris preprocessing
+            $keys = array_keys($this->invertedIdx);
+            for ($i = 0;$i<sizeof($keys);$i++){
+                // print keys
+                print_r("Keys = ".$keys[$i]." Values =");
+                for($j = 0;$j<sizeof($this->invertedIdx[$keys[$i]]);$j++){
+                    // print values yang terdapat pada keys
+                    print_r($this->invertedIdx[$keys[$i]][$j]." ");
+                }
+                echo "<br>";
+            }
         }
     }
 ?>
