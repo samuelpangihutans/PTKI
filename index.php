@@ -69,7 +69,7 @@
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
 
     
-    $search->search("i love fairest creature",$invertedIdx->createInvertedIdx());
+    $search->search("fairest people die first",$invertedIdx->createInvertedIdx());
     #$invertedIdx->getInvertedIndex();
     // $inverted = $invertedIdx->getInvertedIndex();
 
