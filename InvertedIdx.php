@@ -82,17 +82,13 @@
             }
             
             // buat file untuk invertedIdx.txt
-            $newFile = fopen("InvertedIdx/invertedIdx.txt","w") or die("can't open file");
+            $newFile = fopen("InvertedIdx/invertedIdx.json","w") or die("can't open file");
 
             // menulis inverted index kedalam file txt
             
-            // foreach ($this->invertedIdx as $key => $value) {
-            //     fwrite($newFile, $key.'=>'.$value);
-            //     $stringbreak = "\n";
-            //     fwrite($newFile, $stringbreak);
-            // }
-
-            // close
+            $json = $json = json_encode($this->invertedIdx);
+            fwrite($newFile, $json);
+            
             fclose($newFile);
         }
     }

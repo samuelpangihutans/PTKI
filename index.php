@@ -70,6 +70,7 @@
 
     $invertedIdx->createInvertedIdx();
     $idx = $invertedIdx->getInvertedIdx();
+    $invertedIdx->saveInvertedIdx();
     $search->search("fairest people die first",$invertedIdx->getInvertedIdx());
     
     
