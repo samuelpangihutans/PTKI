@@ -15,7 +15,7 @@
 
 <!--view  GAIS -->
 <form action="" method="post">
-  <div class="card mt-2 mr-3" style="width: 18rem;">
+  <div class="card mt-3 ml-5 float-left pl-2" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Data Preprocessing</h5>
       <p class="card-text">Fungsi ini berguna untuk membersihkan data, yakni normalisasi, case folding, stop words, lemmatization, Stemming</p>
@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div class="card mt-2 mr-3" style="width: 18rem;">
+  <div class="card mt-3 ml-5 float-left pl-2" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Inverted Index</h5>
       <p class="card-text">Untuk membuat inverted index, lakukan setelah prepocessing</p>
