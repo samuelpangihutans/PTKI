@@ -26,15 +26,36 @@ if(isset($_POST['search'])){
     $res = $search->search($query,$invertedIdx);
     $time = microtime(true) - $start;
 
+ 
+    $notRelevant=0;
+
+    $golden_answer=array();
+    $relevant=array();
+
     $keys = array_keys($res);
     sort($keys);
     print("Nomor Dokumen untuk query ".$query." adalah : ");
-    for ($i = 0;$i<sizeof($keys);$i++){
+    for ($i = 0;$i<count($keys);$i++){
         if($res[$keys[$i]]>1){
+            array_push($relevant,$keys[$i]);
+            array_push($golden_answer,$keys[$i]);
             print ($keys[$i]." ");
+        }
+        else if($res[$keys[$i]]<=1){
+            $notRelevant+=1;
         }
     }
     echo "<br>";
+    $precision=count($relevant)/(count($relevant)+$notRelevant);
+    print("Precision : ".$precision);
+    echo '<br>';
+
+    $false_negative=count($golden_answer)-count($relevant);
+
+    $recall=count($relevant)/count($relevant)+$false_negative;
+
+    print("Recall : ".$recall);
+    echo '<br>';
     print("Execeution Time Search ".$time);
 }
 
