@@ -30,6 +30,7 @@ class Search{
                 }
             }
         }
+        arsort($res);
         print_r($res);
     }
 }
