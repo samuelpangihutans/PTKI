@@ -27,14 +27,13 @@ if(isset($_POST['search'])){
     $time = microtime(true) - $start;
 
  
-    $notRelevant=0;
-
+    $notRelevant=array();
     $golden_answer=array();
     $relevant=array();
 
     $keys = array_keys($res);
     sort($keys);
-    print("Nomor Dokumen untuk query ".$query." adalah : ");
+    print("Nomor Dokumen relevant untuk query ".$query." adalah : ");
     for ($i = 0;$i<count($keys);$i++){
         if($res[$keys[$i]]>1){
             array_push($relevant,$keys[$i]);
@@ -42,11 +41,18 @@ if(isset($_POST['search'])){
             print ($keys[$i]." ");
         }
         else if($res[$keys[$i]]<=1){
-            $notRelevant+=1;
+            array_push($notRelevant,$keys[$i]);
         }
     }
     echo "<br>";
-    $precision=count($relevant)/(count($relevant)+$notRelevant);
+
+    print("Nomor Dokumen Yang tidak relevant untuk query ".$query." adalah : ");
+    for ($i = 0;$i<count($notRelevant);$i++){
+        print ($keys[$i]." ");
+    }
+
+    echo "<br>";
+    $precision=count($relevant)/(count($relevant)+count($notRelevant));
     print("Precision : ".$precision);
     echo '<br>';
 
@@ -56,6 +62,11 @@ if(isset($_POST['search'])){
 
     print("Recall : ".$recall);
     echo '<br>';
+
+    $f1=2*$precision*$recall/($precision+$recall);
+    print("F1 : ".$f1);
+    echo '<br>';
+
     print("Execeution Time Search ".$time);
 }
 
