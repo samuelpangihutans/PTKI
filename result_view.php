@@ -22,7 +22,20 @@ if(isset($_POST['search'])){
     $invertedIdx=json_decode($strJsonFileContents,true);
     $query=$_POST["query"];
     $search=new Search();
-    $search->search($query,$invertedIdx);
+    $start = microtime(true);
+    $res = $search->search($query,$invertedIdx);
+    $time = microtime(true) - $start;
+
+    $keys = array_keys($res);
+    sort($keys);
+    print("Nomor Dokumen untuk query ".$query." adalah : ");
+    for ($i = 0;$i<sizeof($keys);$i++){
+        if($res[$keys[$i]]>1){
+            print ($keys[$i]." ");
+        }
+    }
+    echo "<br>";
+    print("Execeution Time Search ".$time);
 }
 
 ?>
