@@ -33,7 +33,7 @@ class Search{
         $power = $this->cosine->getPower();
         $res = $this->cosine->calculateCosine();
 
-        print_r($res);
+        // print_r($res);
         // $res=$this->cosine->getRes();
         return $res;
         // $this->tf_idf->getTF_IDF();

@@ -42,8 +42,8 @@ if(isset($_POST['search'])){
     $query=$_POST["query"];
     $search=new Search();
     
-    $tf_idf = new TF_IDF();
-    $tf_idf->doTF_IDF($query);
+    // $tf_idf = new TF_IDF();
+    // $tf_idf->doTF_IDF($query);
 
     $start = microtime(true);
     $res = $search->search($query,$invertedIdx);
