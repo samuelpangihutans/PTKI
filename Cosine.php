@@ -59,7 +59,10 @@
                 }
             }
             for($i=1;$i<=154;$i++){
-                $this->cosine[$i]=$this->res[$i]/($this->res2[$i]*$this->res2[155]);
+                if (($this->res2[$i]*$this->res2[155])!=0){
+                    $this->cosine[$i]=$this->res[$i]/($this->res2[$i]*$this->res2[155]);
+                }
+                
             }
             arsort($this->cosine);
             return $this->cosine;
