@@ -32,8 +32,10 @@ class Search{
         $this->cosine->calculatePower();
         $power = $this->cosine->getPower();
         $res = $this->cosine->calculateCosine();
-        // $res=$this->cosine->getRes();
+
         print_r($res);
+        // $res=$this->cosine->getRes();
+        return $res;
         // $this->tf_idf->getTF_IDF();
 
         // //untuk menampung hasil

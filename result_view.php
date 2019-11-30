@@ -36,43 +36,38 @@ if(isset($_POST['search'])){
     include("Search.php");
     include("preprocessing.php");
     
+     $strJsonFileContents = file_get_contents("InvertedIdx/invertedIdx.json");
+     $invertedIdx=json_decode($strJsonFileContents,true);
 
-    $strJsonFileContents = file_get_contents("InvertedIdx/invertedIdx.json");
-    $invertedIdx=json_decode($strJsonFileContents,true);
     $query=$_POST["query"];
     $search=new Search();
-    //-----------------------
-
+    
+    $tf_idf = new TF_IDF();
+    $tf_idf->doTF_IDF($query);
 
     $start = microtime(true);
     $res = $search->search($query,$invertedIdx);
     $time = microtime(true) - $start;
-
-    // $tf_idf = new TF_IDF();
-    // $tf_idf->doTF_IDF($query);
-
-    $notRelevant=array();
-    $golden_answer=array();
+  
+   // $notRelevant=array();
+   // $golden_answer=array();
     $relevant=array();
 
     $keys = array_keys($res);
     sort($keys);
     for ($i = 0;$i<count($keys);$i++){
-        if($res[$keys[$i]]>1){
+        if($res[$keys[$i]]>0){
             array_push($relevant,$keys[$i]);
-            array_push($golden_answer,$keys[$i]);
+          //  array_push($golden_answer,$keys[$i]);
         }
-        else if($res[$keys[$i]]<=1){
-            array_push($notRelevant,$keys[$i]);
-        }
+        // else if($res[$keys[$i]]<=1){
+        //     array_push($notRelevant,$keys[$i]);
+        // }
     }
-
     echo "<br>";
-    
-    $precision=count($relevant)/(count($relevant)+count($notRelevant));
-    $false_negative=count($golden_answer)-count($relevant);
-    $recall=count($relevant)/count($relevant)+$false_negative;
-
+    // $precision=count($relevant)/(count($relevant)+count($notRelevant));
+    // $false_negative=count($golden_answer)-count($relevant);
+    // $recall=count($relevant)/count($relevant)+$false_negative;
     //Template buat ngeprint si result.
     include('Dokumen.php');
     $dokumen =  new Dokumen();
@@ -92,16 +87,16 @@ if(isset($_POST['search'])){
 
     echo"<hr>";
 
-    print("Precision : ".$precision);
-    echo '<br>';
+    // print("Precision : ".$precision);
+    // echo '<br>';
 
-    print("Recall : ".$recall);
-    echo '<br>';
+    // print("Recall : ".$recall);
+    // echo '<br>';
 
     // $f1=2*$precision*$recall/($precision+$recall);
     // print("F1 : ".$f1);
     // echo '<br>';
-
+    
     print("Execeution Time Search ".$time);
 
 }
