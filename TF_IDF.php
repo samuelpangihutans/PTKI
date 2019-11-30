@@ -72,7 +72,7 @@
         
     }
 
-    
+
 
     $tf_idf = new TF_IDF();
     $tf_idf->getResult();

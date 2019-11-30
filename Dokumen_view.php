@@ -11,52 +11,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 
-
-
     <style>
         /* Styles for wrapping the search box */
 
-.main {
-    width: 50%;
-    margin: 200px auto;
-}
 
-/* Bootstrap 4 text input with search icon */
-
-.has-search .form-control {
-    padding-left: 2.375rem;
-}
-
-.has-search .form-control-feedback {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
-    color: #aaa;
-}
     </style>
+
 </head>
 <body>
 
-<div class="main">
-  
-  <form action="result_view.php" method="post">
-  <!-- Another variation with a button -->
-  <H1 class="mt-4 left pl-5 mt-4 text-center pb-5"><a style="color:teal"href="index.php">SEMA SEARCH </a></H1>
-  <div class="input-group">
-    <input type="text" name="query" class="form-control" placeholder="Search Document">
-    <div class="input-group-append">
-      <button class="btn btn-secondary" type="submit" name="search">
-        <i class="fa fa-search"></i>
-      </button>
-    </div>
-  </div>
-  
-</form>
-</div>
+<?php
+
+    //Template buat ngeprint si result.
+    include('Dokumen.php');
+    $dokumen =  new Dokumen();
+    $rel=$_GET['rel'];
+    $dok=$dokumen->getDokumen($rel);
+    $judul=$dokumen->getJudul($rel);
+     echo' <div class="hr-line-dashed "></div>';
+     echo' <div class="search-result w-50 pt-5 pb-3 pl-5">';
+     echo'   <h4><a href="#">'.$dokumen->getJudul($rel).'</a></h4>';
+     echo '<p>'. $dokumen->getDokumen($rel).'</p>';
+     echo '</div>';
+     //echo '<hr>';
+     echo '<div class="hr-line-dashed"></div>';
+
+?>
+
 </body>
 </html>
