@@ -11,9 +11,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 
+    <style>
+        /* Styles for wrapping the search box */
+
+
+    </style>
+
 </head>
 <body>
-
+<H1 class="mt-4 left pl-5"><a style="color:teal"href="index.php">SEMA SEARCH </a></H1>
+<form action="result_view.php" method="post">
+  <!-- Another variation with a button -->
+  <div id="g1" class="input-group pl-5 pt-2 pb-3 p5-3 w-50">
+    <input type="text" name="query" class="form-control" placeholder="Search Document">
+    <div class="input-group-append">
+      <button class="btn btn-secondary" type="submit" name="search">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </div>
+<hr class="ml-5 mr-5" >
 <?php
 if(isset($_POST['search'])){
     include("Search.php");
@@ -24,6 +41,9 @@ if(isset($_POST['search'])){
     $invertedIdx=json_decode($strJsonFileContents,true);
     $query=$_POST["query"];
     $search=new Search();
+    //-----------------------
+
+
     $start = microtime(true);
     $res = $search->search($query,$invertedIdx);
     $time = microtime(true) - $start;
@@ -35,43 +55,55 @@ if(isset($_POST['search'])){
     $golden_answer=array();
     $relevant=array();
 
-    // $keys = array_keys($res);
-    // sort($keys);
-    // print("Nomor Dokumen relevant untuk query ".$query." adalah : ");
-    // for ($i = 0;$i<count($keys);$i++){
-    //     if($res[$keys[$i]]>1){
-    //         array_push($relevant,$keys[$i]);
-    //         array_push($golden_answer,$keys[$i]);
-    //         print ($keys[$i]." ");
-    //     }
-    //     else if($res[$keys[$i]]<=1){
-    //         array_push($notRelevant,$keys[$i]);
-    //     }
-    // }
-    // echo "<br>";
+    $keys = array_keys($res);
+    sort($keys);
+    for ($i = 0;$i<count($keys);$i++){
+        if($res[$keys[$i]]>1){
+            array_push($relevant,$keys[$i]);
+            array_push($golden_answer,$keys[$i]);
+        }
+        else if($res[$keys[$i]]<=1){
+            array_push($notRelevant,$keys[$i]);
+        }
+    }
 
-    // print("Nomor Dokumen Yang tidak relevant untuk query ".$query." adalah : ");
-    // for ($i = 0;$i<count($notRelevant);$i++){
-    //     print ($keys[$i]." ");
-    // }
+    echo "<br>";
+    
+    $precision=count($relevant)/(count($relevant)+count($notRelevant));
+    $false_negative=count($golden_answer)-count($relevant);
+    $recall=count($relevant)/count($relevant)+$false_negative;
 
-    // echo "<br>";
-    // $precision=count($relevant)/(count($relevant)+count($notRelevant));
-    // print("Precision : ".$precision);
-    // echo '<br>';
+    //Template buat ngeprint si result.
+    include('Dokumen.php');
+    $dokumen =  new Dokumen();
+    $temp="";
+    print($temp);
+    foreach($relevant as $rel){
+      $dok=$dokumen->getDokumen($rel);
+      $judul=$dokumen->getJudul($rel);
+     echo' <div class="hr-line-dashed "></div>';
+     echo' <div class="search-result w-50 pb-3 pl-5">';
+     echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
+     echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+     echo '</div>';
+     //echo '<hr>';
+     echo '<div class="hr-line-dashed"></div>';
+    }
 
-    // $false_negative=count($golden_answer)-count($relevant);
+    echo"<hr>";
 
-    // $recall=count($relevant)/count($relevant)+$false_negative;
+    print("Precision : ".$precision);
+    echo '<br>';
 
-    // print("Recall : ".$recall);
-    // echo '<br>';
+    print("Recall : ".$recall);
+    echo '<br>';
 
     // $f1=2*$precision*$recall/($precision+$recall);
     // print("F1 : ".$f1);
     // echo '<br>';
 
-    // print("Execeution Time Search ".$time);
+    print("Execeution Time Search ".$time);
+
 }
 
 ?>
