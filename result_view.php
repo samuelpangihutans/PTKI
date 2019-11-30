@@ -30,7 +30,8 @@
       </button>
     </div>
   </div>
-<hr class="ml-5 mr-5" >
+
+
 <?php
 if(isset($_POST['search'])){
     include("Search.php");
@@ -48,6 +49,8 @@ if(isset($_POST['search'])){
     $start = microtime(true);
     $res = $search->search($query,$invertedIdx);
     $time = microtime(true) - $start;
+    echo '<p class="pl-5">Execeution Time Search : '.$time.' </p>';
+    echo '<hr class="ml-5 mr-5" >';
   
    // $notRelevant=array();
    // $golden_answer=array();
@@ -97,7 +100,7 @@ if(isset($_POST['search'])){
     // print("F1 : ".$f1);
     // echo '<br>';
     
-    print("Execeution Time Search ".$time);
+    
 
 }
 
