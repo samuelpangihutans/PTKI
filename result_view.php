@@ -55,33 +55,41 @@ if(isset($_POST['search'])){
     $time = microtime(true) - $start;
     echo '<p class="pl-5">Execeution Time Search : '.$time.' </p>';
     echo '<hr class="ml-5 mr-5" >';
-  
-   // $notRelevant=array();
-   // $golden_answer=array();
+
+    $notRelevant=array();
+    $golden_answer=array();
     $relevant=array();
 
-    $keys = array_keys($res);
-    //sort($keys);  
-    for ($i = 0;$i<count($keys);$i++){
-        if($res[$keys[$i]]>0){
+    if(!is_null($res)){
+      $keys = array_keys($res);
+      // sort($keys);
+      for ($i = 0;$i<count($keys);$i++){
+          if($res[$keys[$i]]>0){
             array_push($relevant,$keys[$i]);
-          //  array_push($golden_answer,$keys[$i]);
-        }
-        // else if($res[$keys[$i]]<=1){
-        //     array_push($notRelevant,$keys[$i]);
-        // }
-    }
-    echo "<br>";
-    // $precision=count($relevant)/(count($relevant)+count($notRelevant));
-    // $false_negative=count($golden_answer)-count($relevant);
-    // $recall=count($relevant)/count($relevant)+$false_negative;
-    //Template buat ngeprint si result.
-    include('Dokumen.php');
-    $dokumen =  new Dokumen();
-    $temp="";
-    print($temp);
-
-    $top=$_POST["top"];
+            array_push($golden_answer,$keys[$i]);
+          }
+          else if($res[$keys[$i]]<=1){
+              array_push($notRelevant,$keys[$i]);
+          }
+      }
+      echo "<br>";
+      $precision=0;
+      if(count($relevant)+count($notRelevant)!=0){
+        $precision=count($relevant)/(count($relevant)+count($notRelevant));
+      }
+      $false_negative=count($golden_answer)-count($relevant);
+      
+      $recall=0;
+      if(count($relevant)+$false_negative!=0){
+        $recall=count($relevant)/count($relevant)+$false_negative;
+      }
+      
+      //Template buat ngeprint si result.
+      include('Dokumen.php');
+      $dokumen =  new Dokumen();
+      $temp="";
+      print($temp);
+      $top=$_POST["top"];
 
     if($top=="5"){
       $counter=0;
@@ -142,19 +150,20 @@ if(isset($_POST['search'])){
       echo"<hr>";
     }
  
+      print("Precision : ".$precision);
+      echo '<br>';
 
-    // print("Precision : ".$precision);
-    // echo '<br>';
+      print("Recall : ".$recall);
+      echo '<br>';
 
-    // print("Recall : ".$recall);
-    // echo '<br>';
-
-    // $f1=2*$precision*$recall/($precision+$recall);
-    // print("F1 : ".$f1);
-    // echo '<br>';
+      $f1 = 0;
+      if($precision+$recall!=0){
+        $f1=2*$precision*$recall/($precision+$recall);
+      }
+      print("F1 : ".$f1);
+      echo '<br>';
+    }
     
-    
-
 }
 
 ?>

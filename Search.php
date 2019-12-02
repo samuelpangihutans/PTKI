@@ -28,13 +28,13 @@ class Search{
         $IDF = $this->tf_idf->getIDF();
         $TF_IDF = $this->tf_idf->getTF_IDF();
 
-        $this->cosine = new Cosine($TF, $IDF, $TF_IDF);
+        $this->cosine = new Cosine($TF, $IDF, $TF_IDF, $this->tf_idf->getCounter());
         $this->cosine->calculateDQ();
         $dq = $this->cosine->getDQ();
         $this->cosine->calculatePower();
         $power = $this->cosine->getPower();
-        $res = $this->cosine->calculateCosine();
-
+        $mode = 1;//ambil dari ui, 1 and, 0 or
+        $res = $this->cosine->calculateCosine($mode, $words);
 
         // $this->mixture = new MixtureModel($TF);
         // $this->mixture->calculateMixtureModel($words);
