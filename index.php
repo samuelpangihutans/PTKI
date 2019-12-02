@@ -60,7 +60,7 @@
     </select>
     <select name="metode">
         <option selected="selected" value="1">TF-IDF</option>
-        <option value="2">Cosine</option>
+        <option value="2">Inverted Index</option>
         <option value="3">Language Model</option>
     </select>
     <div class="input-group-append">
