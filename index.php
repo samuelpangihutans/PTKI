@@ -49,6 +49,11 @@
   <H1 class="mt-4 left pl-5 mt-4 text-center pb-5"><a style="color:teal"href="index.php">SEMA SEARCH </a></H1>
   <div class="input-group">
     <input type="text" name="query" class="form-control" placeholder="Search Document">
+    <select name="top">
+        <option selected="selected" value="all">ALL</option>
+        <option value="5">TOP 5</option>
+        <option value="10">TOP 10</option>
+    </select>
     <div class="input-group-append">
       <button class="btn btn-secondary" type="submit" name="search">
         <i class="fa fa-search"></i>
