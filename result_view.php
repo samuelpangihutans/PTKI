@@ -24,6 +24,11 @@
   <!-- Another variation with a button -->
   <div id="g1" class="input-group pl-5 pt-2 pb-3 p5-3 w-50">
     <input type="text" name="query" class="form-control" placeholder="Search Document">
+    <select name="top">
+        <option selected="selected" value="all">ALL</option>
+        <option value="5">TOP 5</option>
+        <option value="10">TOP 10</option>
+    </select>
     <div class="input-group-append">
       <button class="btn btn-secondary" type="submit" name="search">
         <i class="fa fa-search"></i>
@@ -31,14 +36,13 @@
     </div>
   </div>
 
-
 <?php
 if(isset($_POST['search'])){
     include("Search.php");
     include("preprocessing.php");
     
-     $strJsonFileContents = file_get_contents("InvertedIdx/invertedIdx.json");
-     $invertedIdx=json_decode($strJsonFileContents,true);
+    $strJsonFileContents = file_get_contents("InvertedIdx/invertedIdx.json");
+    $invertedIdx=json_decode($strJsonFileContents,true);
 
     $query=$_POST["query"];
     $search=new Search();
@@ -76,19 +80,65 @@ if(isset($_POST['search'])){
     $dokumen =  new Dokumen();
     $temp="";
     print($temp);
-    foreach($relevant as $rel){
-      $dok=$dokumen->getDokumen($rel);
-      $judul=$dokumen->getJudul($rel);
-     echo' <div class="hr-line-dashed "></div>';
-     echo' <div class="search-result w-50 pb-3 pl-5">';
-     echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
-     echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
-     echo '</div>';
-     //echo '<hr>';
-     echo '<div class="hr-line-dashed"></div>';
-    }
 
-    echo"<hr>";
+    $top=$_POST["top"];
+
+    if($top=="5"){
+      $counter=0;
+      foreach($relevant as $rel){
+        if($counter>4){
+        break;
+        }
+        $counter++;
+        $dok=$dokumen->getDokumen($rel);
+        $judul=$dokumen->getJudul($rel);
+       echo' <div class="hr-line-dashed "></div>';
+       echo' <div class="search-result w-50 pb-3 pl-5">';
+       echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
+       echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+       echo '</div>';
+       //echo '<hr>';
+       echo '<div class="hr-line-dashed"></div>';
+
+   
+      }
+      echo"<hr>";
+    }
+    else if($top=="10"){
+      $counter=0;
+      foreach($relevant as $rel){
+        if($counter>9){
+        break;
+        }
+        $counter++;
+        $dok=$dokumen->getDokumen($rel);
+        $judul=$dokumen->getJudul($rel);
+       echo' <div class="hr-line-dashed "></div>';
+       echo' <div class="search-result w-50 pb-3 pl-5">';
+       echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
+       echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+       echo '</div>';
+       //echo '<hr>';
+       echo '<div class="hr-line-dashed"></div>';
+      }
+      echo"<hr>";
+
+    }
+    else{
+      foreach($relevant as $rel){
+        $dok=$dokumen->getDokumen($rel);
+        $judul=$dokumen->getJudul($rel);
+       echo' <div class="hr-line-dashed "></div>';
+       echo' <div class="search-result w-50 pb-3 pl-5">';
+       echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
+       echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+       echo '</div>';
+       //echo '<hr>';
+       echo '<div class="hr-line-dashed"></div>';
+      }
+      echo"<hr>";
+    }
+ 
 
     // print("Precision : ".$precision);
     // echo '<br>';
