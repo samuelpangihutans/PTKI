@@ -6,6 +6,8 @@
         private $TF;
         private $IDF;
         private $TF_IDF;
+        private $counter;
+        
         
 
         public function __construct(){
@@ -15,6 +17,7 @@
             $this->TF = [];
             $this->IDF = [];
             $this->TF_IDF = [];
+            $this->counter=0;
         }
 
         public function createTF(){
@@ -57,13 +60,19 @@
 
         public function createTFQuery($query){
             //idx 155 untuk array baru
+            // print(sizeof($query)." ");
+            // print_r($query);
             for($j = 0 ;$j<sizeof($query); $j++){
                 if(array_key_exists($query[$j],$this->invertedIdx)==TRUE){
-                    // print("masuk");
                     $this->TF[$query[$j]][155]=1;
-                    }
-            }        
+                    $this->counter++;
+                    // print(" ".$query[$j]);
+                }
+            } 
+            // print(" ".$this->counter);     
         }
+        
+        
         
         public function saveTF(){
             $dir = "TF_IDF";
@@ -113,6 +122,10 @@
                     $this->TF_IDF[$key][$i] = $this->TF[$key][$i]*$this->IDF[$key];
                 }
             }
+        }
+
+        public function getCounter(){
+            return $this->counter;
         }
 
         public function getTF(){

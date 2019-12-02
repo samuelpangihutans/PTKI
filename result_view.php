@@ -51,57 +51,71 @@ if(isset($_POST['search'])){
     $time = microtime(true) - $start;
     echo '<p class="pl-5">Execeution Time Search : '.$time.' </p>';
     echo '<hr class="ml-5 mr-5" >';
-  
-   // $notRelevant=array();
-   // $golden_answer=array();
+
+    $notRelevant=array();
+    $golden_answer=array();
     $relevant=array();
 
-    $keys = array_keys($res);
-    sort($keys);
-    for ($i = 0;$i<count($keys);$i++){
-        if($res[$keys[$i]]>0){
+    // print_r($res);
+    if(!is_null($res)){
+      $keys = array_keys($res);
+      // sort($keys);
+      for ($i = 0;$i<count($keys);$i++){
+          if($res[$keys[$i]]>0){
             array_push($relevant,$keys[$i]);
-          //  array_push($golden_answer,$keys[$i]);
-        }
-        // else if($res[$keys[$i]]<=1){
-        //     array_push($notRelevant,$keys[$i]);
-        // }
+            array_push($golden_answer,$keys[$i]);
+          }
+          else if($res[$keys[$i]]<=1){
+              array_push($notRelevant,$keys[$i]);
+          }
+      }
+      echo "<br>";
+      $precision=0;
+      if(count($relevant)+count($notRelevant)!=0){
+        $precision=count($relevant)/(count($relevant)+count($notRelevant));
+      }
+      $false_negative=count($golden_answer)-count($relevant);
+      
+      $recall=0;
+      if(count($relevant)+$false_negative!=0){
+        $recall=count($relevant)/count($relevant)+$false_negative;
+      }
+      
+      //Template buat ngeprint si result.
+      include('Dokumen.php');
+      $dokumen =  new Dokumen();
+      $temp="";
+      print($temp);
+      foreach($relevant as $rel){
+        $dok=$dokumen->getDokumen($rel);
+        $judul=$dokumen->getJudul($rel);
+      echo' <div class="hr-line-dashed "></div>';
+      echo' <div class="search-result w-50 pb-3 pl-5">';
+      echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
+      echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+      echo '<p style="color:red">SCORE :'.$res[$rel]. '</p>';
+      echo '</div>';
+      
+      //echo '<hr>';
+      echo '<div class="hr-line-dashed"></div>';
+      }
+
+      echo"<hr>";
+
+      print("Precision : ".$precision);
+      echo '<br>';
+
+      print("Recall : ".$recall);
+      echo '<br>';
+
+      $f1 = 0;
+      if($precision+$recall!=0){
+        $f1=2*$precision*$recall/($precision+$recall);
+      }
+      print("F1 : ".$f1);
+      echo '<br>';
     }
-    echo "<br>";
-    // $precision=count($relevant)/(count($relevant)+count($notRelevant));
-    // $false_negative=count($golden_answer)-count($relevant);
-    // $recall=count($relevant)/count($relevant)+$false_negative;
-    //Template buat ngeprint si result.
-    include('Dokumen.php');
-    $dokumen =  new Dokumen();
-    $temp="";
-    print($temp);
-    foreach($relevant as $rel){
-      $dok=$dokumen->getDokumen($rel);
-      $judul=$dokumen->getJudul($rel);
-     echo' <div class="hr-line-dashed "></div>';
-     echo' <div class="search-result w-50 pb-3 pl-5">';
-     echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
-     echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
-     echo '</div>';
-     //echo '<hr>';
-     echo '<div class="hr-line-dashed"></div>';
-    }
-
-    echo"<hr>";
-
-    // print("Precision : ".$precision);
-    // echo '<br>';
-
-    // print("Recall : ".$recall);
-    // echo '<br>';
-
-    // $f1=2*$precision*$recall/($precision+$recall);
-    // print("F1 : ".$f1);
-    // echo '<br>';
     
-    
-
 }
 
 ?>
