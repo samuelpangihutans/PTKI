@@ -40,7 +40,43 @@ class Search{
             // ASALNYA INI (TF-IDF)
             return $res;
         }else if ($metode == 2){
+            $res=[];
+            sort($words);
+            // looping sebanyak jumlah term hasil prepocessing
+            for($i=0;$i<sizeof($words);$i++){
+                // cek apakah word ke i ada di dalam inverted index
+                if(array_key_exists($words[$i],$invertedIndex)==TRUE){
+                    for($j=0;$j<sizeof((array)$invertedIndex[$words[$i]]);$j++){
+                        $idDoc = $invertedIndex[$words[$i]][$j];
+                        // untuk inisialisasi res
+                        if(array_key_exists($idDoc,$res)==FALSE){
+                            $res[$idDoc]=1;
+                        }else {
+                            $res[$idDoc]+=1;                        
+                        }
+                    }
+                }
+            }
+            $counter = 0;
+            for($i = 0; $i<sizeof($words); $i++){
+                if($words[$i]!=""){
+                    $counter++;
+                }
+            }
 
+            arsort($res);
+            if($mode == 1){
+                $keys = array_keys($res);
+                $r=[];
+                foreach($keys as $key){
+                    if($res[$key]==$counter){
+                        $r[$key]=$res[$key];
+                    }
+                }
+                return $r;
+            }else{
+                return $res;
+            }
         }else {
             $this->tf_idf->doTF_IDF($words);
 

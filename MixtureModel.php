@@ -19,7 +19,7 @@
             for($i = 1; $i <= 154; $i++){
                 $this->termPerDoc[$i]=0;
                 $this->doc[$i]= 0;
-                $this->res[$i]=0;
+                $this->res[$i]=1;
             }
             $this->keys = array_keys($this->TF);
             $this->statistik = new Statistik();
@@ -31,7 +31,7 @@
             }
 
             // print($this->jumlahTerm);
-            $this->lamda = 0.5;
+            $this->lamda = 0.3;
 
             $strJsonFileContents = file_get_contents("InvertedIdx/invertedIdx.json");
             $this->invertedIdx = json_decode($strJsonFileContents,true);
@@ -43,12 +43,10 @@
                 if(array_key_exists($query[$j],$this->invertedIdx)==TRUE){
                     $this->calculateDoc($query[$j]);
                     for ($i = 1; $i <= 154; $i++){
-                        if($this->jumlahTerm!=0 && $this->doc[$i]!=0){
+                        if($this->doc[$i]!=0){
                             $a = $this->lamda*($this->TF[$query[$j]][$i]/$this->doc[$i]);
                             $b = (1-$this->lamda)*($this->TF[$query[$j]][$i]/$this->jumlahTerm);
-                            // print($a*$b);
-                            // echo "<br>";
-                            $this->res[$i]+=$a*$b;
+                            $this->res[$i]*=$a*$b;
                         }
                     }
                 }
