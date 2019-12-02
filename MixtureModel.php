@@ -46,6 +46,8 @@
                         if($this->jumlahTerm!=0 && $this->doc[$i]!=0){
                             $a = $this->lamda*($this->TF[$query[$j]][$i]/$this->doc[$i]);
                             $b = (1-$this->lamda)*($this->TF[$query[$j]][$i]/$this->jumlahTerm);
+                            // print($a*$b);
+                            // echo "<br>";
                             $this->res[$i]+=$a*$b;
                         }
                     }

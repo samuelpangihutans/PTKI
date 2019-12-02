@@ -38,13 +38,14 @@ class Search{
 
         // $this->mixture = new MixtureModel($TF);
         // $this->mixture->calculateMixtureModel($words);
-        // $this->mixture->getRes();
+        // print_r($this->mixture->getRes());
 
         
         // ASALNYA INI (TF-IDF)
         return $res;
         
-        return $this->mixture->getRes();
+        // MIXTURE MODEL
+        // return $this->mixture->getRes();
 
         // $this->tf_idf->getTF_IDF();
 
