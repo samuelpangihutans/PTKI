@@ -24,9 +24,14 @@
             $this->keys = array_keys($this->TF);
             $this->statistik = new Statistik();
             $this->statistik->jumlahWord();
-            $this->jumlahTerm = $this->statistik->getValueArrayTerm();
-            print($this->jumlahTerm);
-            $this->lamda = 0.4;
+            foreach($this->keys as $key){
+                for($i=1; $i<=154;$i++){
+                    $this->jumlahTerm+=$this->TF[$key][$i];
+                }
+            }
+
+            // print($this->jumlahTerm);
+            $this->lamda = 0.5;
 
             $strJsonFileContents = file_get_contents("InvertedIdx/invertedIdx.json");
             $this->invertedIdx = json_decode($strJsonFileContents,true);
@@ -49,7 +54,8 @@
         }
 
         public function getRes(){
-            print_r($this->res);
+            arsort($this->res);
+            return $this->res;
         }
 
         public function calculateDoc($term){
