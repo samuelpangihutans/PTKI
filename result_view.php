@@ -51,7 +51,7 @@ if(isset($_POST['search'])){
     // $tf_idf->doTF_IDF($query);
 
     $start = microtime(true);
-    $res = $search->search($query,$invertedIdx);
+    $res = $search->search($mode, $query,$invertedIdx);
     $time = microtime(true) - $start;
     echo '<p class="pl-5">Execeution Time Search : '.$time.' </p>';
     echo '<hr class="ml-5 mr-5" >';

@@ -14,7 +14,7 @@ class Search{
 
     }
 
-    public function search($input,$invertedIndex){
+    public function search($mode, $input,$invertedIndex){
         // melakukan preprocessing untuk query
         $query=$this->clean->doPreprocessing($input);
         // print($query);
@@ -33,7 +33,7 @@ class Search{
         $dq = $this->cosine->getDQ();
         $this->cosine->calculatePower();
         $power = $this->cosine->getPower();
-        $mode = 1;//ambil dari ui, 1 and, 0 or
+        // $mode = 1;//ambil dari ui, 1 and, 0 or
         $res = $this->cosine->calculateCosine($mode, $words);
 
         // $this->mixture = new MixtureModel($TF);
