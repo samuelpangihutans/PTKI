@@ -64,7 +64,7 @@ if(isset($_POST['search'])){
     $start = microtime(true);
     $res = $search->search($mode, $metode,$query,$invertedIdx);
     $time = microtime(true) - $start;
-    echo '<p class="pl-5">Execeution Time Search : '.$time.' </p>';
+    echo '<p class="pl-5">Execution Time Search : '.$time.' </p>';
     echo '<hr class="ml-5 mr-5" >';
 
     $notRelevant=array();
@@ -75,7 +75,7 @@ if(isset($_POST['search'])){
       $keys = array_keys($res);
       // sort($keys);
       for ($i = 0;$i<count($keys);$i++){
-          if($res[$keys[$i]]>0){
+          if($res[$keys[$i]]>0.3){
             array_push($relevant,$keys[$i]);
             array_push($golden_answer,$keys[$i]);
           }
