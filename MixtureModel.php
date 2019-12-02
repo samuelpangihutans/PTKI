@@ -53,9 +53,20 @@
             }        
         }
 
-        public function getRes(){
+        public function getRes($mode){
             arsort($this->res);
-            return $this->res;
+            $keys = array_keys($this->res);
+            $r = [];
+            if($mode == 1){
+                foreach($keys as $key){
+                    if($this->res[$key]>=1){
+                        $r[$key]=$this->res[$key];
+                    }
+                }
+                return $r;
+            }else{
+                return $this->res;
+            }
         }
 
         public function calculateDoc($term){
@@ -69,8 +80,7 @@
             foreach($this->keys as $key){
                 for($i = 1; $i <= 154; $i++){
                     $this->termPerDoc[$i]+=$this->TF[$key][$i];
-                }
-                
+                } 
             }
         }
     }

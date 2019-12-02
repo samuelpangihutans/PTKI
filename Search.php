@@ -84,7 +84,7 @@ class Search{
 
             $this->mixture = new MixtureModel($TF);
             $this->mixture->calculateMixtureModel($words);
-            return $this->mixture->getRes();
+            return $this->mixture->getRes($mode);
 
         }
         // // print_r($words);
