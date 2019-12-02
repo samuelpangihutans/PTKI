@@ -61,7 +61,7 @@ if(isset($_POST['search'])){
     $relevant=array();
 
     $keys = array_keys($res);
-    sort($keys);
+    //sort($keys);  
     for ($i = 0;$i<count($keys);$i++){
         if($res[$keys[$i]]>0){
             array_push($relevant,$keys[$i]);
@@ -96,6 +96,7 @@ if(isset($_POST['search'])){
        echo' <div class="search-result w-50 pb-3 pl-5">';
        echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
        echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+       echo '<p style="color:red">SCORE :'.$res[$rel]. '</p>';
        echo '</div>';
        //echo '<hr>';
        echo '<div class="hr-line-dashed"></div>';
@@ -117,6 +118,7 @@ if(isset($_POST['search'])){
        echo' <div class="search-result w-50 pb-3 pl-5">';
        echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
        echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+       echo '<p style="color:red">SCORE :'.$res[$rel]. '</p>';
        echo '</div>';
        //echo '<hr>';
        echo '<div class="hr-line-dashed"></div>';
@@ -132,6 +134,7 @@ if(isset($_POST['search'])){
        echo' <div class="search-result w-50 pb-3 pl-5">';
        echo'   <h4><a href="Dokumen_view.php?rel='.$rel.'">'.$dokumen->getJudul($rel).'</a></h4>';
        echo '<p>'. $dokumen->getDeskripsi($rel).'</p>';
+       echo '<p style="color:red">SCORE :'.$res[$rel]. '</p>';
        echo '</div>';
        //echo '<hr>';
        echo '<div class="hr-line-dashed"></div>';
