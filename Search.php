@@ -14,7 +14,7 @@ class Search{
 
     }
 
-    public function search($mode, $input,$invertedIndex){
+    public function search($input,$invertedIndex){
         // melakukan preprocessing untuk query
         $query=$this->clean->doPreprocessing($input);
         // print($query);
@@ -28,13 +28,13 @@ class Search{
         $IDF = $this->tf_idf->getIDF();
         $TF_IDF = $this->tf_idf->getTF_IDF();
 
-        $this->cosine = new Cosine($TF, $IDF, $TF_IDF, $this->tf_idf->getCounter());
+        $this->cosine = new Cosine($TF, $IDF, $TF_IDF);
         $this->cosine->calculateDQ();
         $dq = $this->cosine->getDQ();
         $this->cosine->calculatePower();
         $power = $this->cosine->getPower();
-        // $mode = 1;//ambil dari ui, 1 and, 0 or
-        $res = $this->cosine->calculateCosine($mode, $words);
+        $res = $this->cosine->calculateCosine();
+
 
         // $this->mixture = new MixtureModel($TF);
         // $this->mixture->calculateMixtureModel($words);
