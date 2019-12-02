@@ -60,7 +60,13 @@
       </button>
     </div>
   </div>
-  
+  <div>
+    <form action="">
+      <input type="radio" name="metode" value="InvertedIndex"> InvertedIndex<br>
+      <input type="radio" name="metode" value="Cosine"> Cosine<br>
+      <input type="radio" name="metode" value="LanguageModel"> LanguageModel
+    </form>
+  </div>
 </form>
 </div>
 </body>
