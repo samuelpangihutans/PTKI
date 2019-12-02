@@ -76,8 +76,8 @@
     
     // echo "<br>";
     // echo "<br>";
-    // echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
-    // echo "<br>";
+    echo "Jumlah Term : ".$statistik->getValueArrayTerm(0);
+    echo "<br>";
     // echo "Rata-rata term setiap dokumen : ".$statistik->jumlahRataRataTermDoc();
     print_r("Exceution time Preprocessing = ".$times);
     echo "<br>";

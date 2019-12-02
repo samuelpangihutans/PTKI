@@ -1,10 +1,12 @@
 <?php
     include("TF_IDF.php");
     include("Cosine.php");
+    include("MixtureModel.php");
 class Search{
     private $clean;
     private $tf_idf;
     private $cosine;
+    private $mixture;
 
     public function __construct(){
         $this->clean=new Preprocessing();
@@ -33,10 +35,17 @@ class Search{
         $power = $this->cosine->getPower();
         $res = $this->cosine->calculateCosine();
 
+
+        // $this->mixture = new MixtureModel($TF);
+        // $this->mixture->calculateMixtureModel($words);
+        // $this->mixture->getRes();
+
         // print_r($res);
         // $res=$this->cosine->getRes();
         return $res;
         // $this->tf_idf->getTF_IDF();
+
+        
 
         // //untuk menampung hasil
         // $res=[];
