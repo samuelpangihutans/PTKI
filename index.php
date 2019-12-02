@@ -49,24 +49,26 @@
   <H1 class="mt-4 left pl-5 mt-4 text-center pb-5"><a style="color:teal"href="index.php">SEMA SEARCH </a></H1>
   <div class="input-group">
     <input type="text" name="query" class="form-control" placeholder="Search Document">
+    <select name="mode">
+        <option value="1" selected="selected">AND</option>
+        <option value="0">OR</option>
+    </select>
     <select name="top">
         <option selected="selected" value="all">ALL</option>
         <option value="5">TOP 5</option>
         <option value="10">TOP 10</option>
+    </select>
+    <select name="metode">
+        <option selected="selected" value="1">TF-IDF</option>
+        <option value="2">Cosine</option>
+        <option value="3">Language Model</option>
     </select>
     <div class="input-group-append">
       <button class="btn btn-secondary" type="submit" name="search">
         <i class="fa fa-search"></i>
       </button>
     </div>
-  </div>
-  <div>
-    <form action="">
-      <input type="radio" name="metode" value="InvertedIndex"> InvertedIndex<br>
-      <input type="radio" name="metode" value="Cosine"> Cosine<br>
-      <input type="radio" name="metode" value="LanguageModel"> LanguageModel
-    </form>
-  </div>
+  </div>  
 </form>
 </div>
 </body>

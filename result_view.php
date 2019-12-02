@@ -24,10 +24,19 @@
   <!-- Another variation with a button -->
   <div id="g1" class="input-group pl-5 pt-2 pb-3 p5-3 w-50">
     <input type="text" name="query" class="form-control" placeholder="Search Document">
+    <select name="mode">
+        <option value="1" selected="selected">AND</option>
+        <option value="0">OR</option>
+    </select>
     <select name="top">
         <option selected="selected" value="all">ALL</option>
         <option value="5">TOP 5</option>
         <option value="10">TOP 10</option>
+    </select>
+    <select name="metode">
+        <option selected="selected" value="1">TF-IDF</option>
+        <option value="2">Cosine</option>
+        <option value="3">Language Model</option>
     </select>
     <div class="input-group-append">
       <button class="btn btn-secondary" type="submit" name="search">
@@ -50,8 +59,10 @@ if(isset($_POST['search'])){
     // $tf_idf = new TF_IDF();
     // $tf_idf->doTF_IDF($query);
 
+    $mode=$_POST["mode"];
+    $metode=$_POST["metode"];
     $start = microtime(true);
-    $res = $search->search($mode, $query,$invertedIdx);
+    $res = $search->search($mode, $metode,$query,$invertedIdx);
     $time = microtime(true) - $start;
     echo '<p class="pl-5">Execeution Time Search : '.$time.' </p>';
     echo '<hr class="ml-5 mr-5" >';

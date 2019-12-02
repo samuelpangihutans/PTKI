@@ -14,37 +14,67 @@ class Search{
 
     }
 
-    public function search($mode, $input,$invertedIndex){
+    public function search($mode, $metode,$input,$invertedIndex){
         // melakukan preprocessing untuk query
         $query=$this->clean->doPreprocessing($input);
         // print($query);
 
         $words=explode(" ",rtrim($query));
 
-        // print_r($words);
-        $this->tf_idf->doTF_IDF($words);
+        if($metode == 1){
+            // print_r($words);
+            $this->tf_idf->doTF_IDF($words);
 
-        $TF = $this->tf_idf->getTF();
-        $IDF = $this->tf_idf->getIDF();
-        $TF_IDF = $this->tf_idf->getTF_IDF();
+            $TF = $this->tf_idf->getTF();
+            $IDF = $this->tf_idf->getIDF();
+            $TF_IDF = $this->tf_idf->getTF_IDF();
 
-        $this->cosine = new Cosine($TF, $IDF, $TF_IDF, $this->tf_idf->getCounter());
-        $this->cosine->calculateDQ();
-        $dq = $this->cosine->getDQ();
-        $this->cosine->calculatePower();
-        $power = $this->cosine->getPower();
-        // $mode = 1;//ambil dari ui, 1 and, 0 or
-        $res = $this->cosine->calculateCosine($mode, $words);
+            $this->cosine = new Cosine($TF, $IDF, $TF_IDF, $this->tf_idf->getCounter());
+            $this->cosine->calculateDQ();
+            $dq = $this->cosine->getDQ();
+            $this->cosine->calculatePower();
+            $power = $this->cosine->getPower();
+            // $mode = 1;//ambil dari ui, 1 and, 0 or
+            $res = $this->cosine->calculateCosine($mode, $words);
 
-        // $this->mixture = new MixtureModel($TF);
-        // $this->mixture->calculateMixtureModel($words);
-        // print_r($this->mixture->getRes());
+            // ASALNYA INI (TF-IDF)
+            return $res;
+        }else if ($metode == 2){
+
+        }else {
+            $this->tf_idf->doTF_IDF($words);
+
+            $TF = $this->tf_idf->getTF();
+
+            $this->mixture = new MixtureModel($TF);
+            $this->mixture->calculateMixtureModel($words);
+            return $this->mixture->getRes();
+
+        }
+        // // print_r($words);
+        // $this->tf_idf->doTF_IDF($words);
+
+        // $TF = $this->tf_idf->getTF();
+        // $IDF = $this->tf_idf->getIDF();
+        // $TF_IDF = $this->tf_idf->getTF_IDF();
+
+        // $this->cosine = new Cosine($TF, $IDF, $TF_IDF, $this->tf_idf->getCounter());
+        // $this->cosine->calculateDQ();
+        // $dq = $this->cosine->getDQ();
+        // $this->cosine->calculatePower();
+        // $power = $this->cosine->getPower();
+        // // $mode = 1;//ambil dari ui, 1 and, 0 or
+        // $res = $this->cosine->calculateCosine($mode, $words);
+
+        // // $this->mixture = new MixtureModel($TF);
+        // // $this->mixture->calculateMixtureModel($words);
+        // // print_r($this->mixture->getRes());
 
         
-        // ASALNYA INI (TF-IDF)
-        return $res;
+        // // ASALNYA INI (TF-IDF)
+        // return $res;
         
-        // MIXTURE MODEL
+        // // MIXTURE MODEL
         // return $this->mixture->getRes();
 
         // $this->tf_idf->getTF_IDF();
