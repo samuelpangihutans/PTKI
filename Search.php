@@ -36,13 +36,13 @@ class Search{
         $res = $this->cosine->calculateCosine();
 
 
-        $this->mixture = new MixtureModel($TF);
-        $this->mixture->calculateMixtureModel($words);
+        // $this->mixture = new MixtureModel($TF);
+        // $this->mixture->calculateMixtureModel($words);
         // $this->mixture->getRes();
 
         
         // ASALNYA INI (TF-IDF)
-        // return $res;
+        return $res;
         
         return $this->mixture->getRes();
 

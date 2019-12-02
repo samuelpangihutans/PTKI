@@ -27,7 +27,6 @@ class Statistik{
          $counter=0;
          $sum=0;
          $result=0;
-         $idx=0;
          $dir = opendir('DataSet');
          while ($file = readdir($dir)) { //MEMBUKA DIRECTORY
              if ($file == '.' || $file == '..') {
@@ -41,10 +40,7 @@ class Statistik{
                      $teks = fgets($fn);
                      $kata = explode(" ",$teks);
                      $sum=$sum+count($kata);
-                     $temp += $this->jumlahTerm($teks);
                  }
-            $this->setValueArrayTerm($temp,$idx);
-            $idx++;
              fclose($fn);
              $this->jmlhKataDoc[$counter]=$sum;
              $counter=$counter+1;
