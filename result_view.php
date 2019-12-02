@@ -31,6 +31,19 @@
     </div>
   </div>
 
+  <div class="dropdown pl-5 right">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      Ambil Top :
+    </button>
+    <form action="result_view.php" method="post">
+    <div class="dropdown-menu">
+      <a class="dropdown-item" name="top" value="5">5</a>
+      <a class="dropdown-item" name="top" value="10">10</a>
+      <a class="dropdown-item" name="top">all</a>
+    </div>
+    </form>
+  </div>
+
 
 <?php
 if(isset($_POST['search'])){
